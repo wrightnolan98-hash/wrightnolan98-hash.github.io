@@ -497,6 +497,142 @@
   .custom-lb-delete:hover { color:#e05050; border-color:#e05050; }
   .modal-name-input { width:100%; font-size:15px; border:1px solid var(--border2); border-radius:var(--r); padding:9px 12px; background:var(--surface); color:var(--text); margin-bottom:10px; font-family:var(--serif); font-weight:700; text-transform:uppercase; }
   .modal-name-input:focus { outline:none; border-color:var(--text); }
+
+  /* ── Patch notes footer ── */
+  .patch-footer {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 0 1rem 2rem;
+    display: none;
+  }
+  .patch-footer-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--sans);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--faint);
+    text-decoration: none;
+    padding: 8px 0;
+    border-top: 1px solid var(--border);
+    width: 100%;
+    transition: color .15s;
+    cursor: pointer;
+    background: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+  }
+  .patch-footer-link:hover { color: var(--sub); }
+  .patch-footer-link .pf-arrow { transition: transform .15s; }
+  .patch-notes-modal { position:fixed; inset:0; background:rgba(0,0,0,.75); display:flex; align-items:flex-end; justify-content:center; z-index:1000; padding:0; }
+  .patch-notes-sheet {
+    background: var(--card);
+    border-radius: 16px 16px 0 0;
+    width: 100%;
+    max-width: 680px;
+    max-height: 88vh;
+    overflow-y: auto;
+    padding: 0 0 2rem;
+    box-shadow: 0 -8px 48px rgba(0,0,0,.4);
+    animation: slideUp .25s ease;
+  }
+  @keyframes slideUp { from { transform:translateY(100%); } to { transform:translateY(0); } }
+  .patch-handle { width:40px; height:4px; background:var(--border2); border-radius:2px; margin:12px auto 0; }
+  .patch-header {
+    padding: 20px 20px 16px;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    background: var(--card);
+    z-index: 1;
+  }
+  .patch-eyebrow { font-family:var(--sans); font-size:10px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--faint); margin-bottom:4px; }
+  .patch-title { font-family:var(--serif); font-size:24px; font-weight:700; color:var(--text); letter-spacing:-.3px; }
+  .patch-date { font-family:var(--sans); font-size:11px; color:var(--sub); margin-top:4px; font-weight:700; letter-spacing:.5px; }
+  .patch-close { position:absolute; top:16px; right:16px; background:none; border:1px solid var(--border2); border-radius:2px; color:var(--sub); font-size:13px; cursor:pointer; padding:4px 9px; font-family:var(--sans); font-weight:700; transition:all .15s; }
+  .patch-close:hover { color:var(--text); border-color:var(--sub); }
+  .patch-body { padding: 0 20px; }
+  .patch-section { margin-top: 28px; }
+  .patch-section-label {
+    font-family: var(--sans);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--faint);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .patch-section-label::after { content:''; flex:1; height:1px; background:var(--border); }
+  .patch-section-icon { font-size: 14px; }
+  .patch-heading {
+    font-family: var(--serif);
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 10px;
+    letter-spacing: -.2px;
+  }
+  .patch-p {
+    font-family: var(--sans);
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--sub);
+    margin-bottom: 14px;
+  }
+  .patch-p strong { color: var(--text); font-weight: 700; }
+  .patch-p em { color: var(--faint); font-style: italic; }
+  .patch-list {
+    list-style: none;
+    margin: 0 0 16px;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .patch-list li {
+    font-family: var(--sans);
+    font-size: 13px;
+    color: var(--sub);
+    line-height: 1.6;
+    padding-left: 18px;
+    position: relative;
+  }
+  .patch-list li::before { content:'—'; position:absolute; left:0; color:var(--faint); }
+  .patch-list li strong { color: var(--text); }
+  .patch-known li::before { content:'⚠'; font-size:10px; top:2px; }
+  .patch-bug li::before { content:'✓'; color: var(--green); }
+  .patch-new li::before { content:'＋'; color:#5ba4cf; }
+  body.light .patch-notes-sheet { box-shadow: 0 -8px 48px rgba(0,0,0,.15); }
+
+  /* ── Player pick list ── */
+  .player-pick-item { display:flex; align-items:center; gap:10px; padding:8px 10px; background:var(--card2); border:1px solid var(--border); border-radius:var(--r); cursor:pointer; transition:all .12s; }
+  .player-pick-item:hover { border-color:#c03030; background:#2e1010; }
+  body.light .player-pick-item:hover { background:#fdecea; border-color:#c03030; }
+  .player-pick-av { width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; flex-shrink:0; }
+  .player-pick-name { font-family:var(--sans); font-size:13px; font-weight:700; flex:1; }
+  .player-pick-arrow { color:var(--faint); font-size:12px; }
+  /* ── Danger zone (minimal) ── */
+  .danger-btn { background: none; border: none; cursor: pointer; font-family: var(--sans); font-size: 10px; font-weight: 500; color: var(--faint); padding: 3px 0; letter-spacing: .2px; transition: color .12s; display: block; }
+  .danger-btn:hover { color: #c03030; }
+
+  /* ── Password modal ── */
+  .pw-modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.75); display: flex; align-items: center; justify-content: center; z-index: 1001; }
+  .pw-modal-box { background: var(--card); border: 1px solid #8b2020; border-radius: var(--r); padding: 24px; max-width: 300px; width: 90%; box-shadow: 0 16px 48px rgba(0,0,0,.5); }
+  .pw-modal-title { font-family: var(--serif); font-size: 18px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+  .pw-modal-sub { font-size: 12px; color: var(--sub); margin-bottom: 16px; line-height: 1.5; font-family: var(--sans); }
+  .pw-input { width: 100%; font-size: 16px; border: 1px solid var(--border2); border-radius: var(--r); padding: 10px 12px; background: var(--surface); color: var(--text); font-family: var(--sans); letter-spacing: 4px; text-align: center; margin-bottom: 6px; }
+  .pw-input:focus { outline: none; border-color: #ff6b6b; }
+  .pw-err { font-size: 11px; color: #ff6b6b; font-weight: 700; min-height: 16px; margin-bottom: 10px; font-family: var(--sans); }
+  .pw-actions { display: flex; gap: 8px; justify-content: flex-end; }
+  .pw-confirm-btn { font-family: var(--sans); font-size: 12px; font-weight: 700; letter-spacing: .4px; text-transform: uppercase; padding: 8px 16px; border-radius: var(--r); cursor: pointer; background: #8b2020; color: #fff; border: 1px solid #8b2020; transition: all .12s; }
+  .pw-confirm-btn:hover { background: #c03030; border-color: #c03030; }
 </style>
 </head>
 <body>
@@ -529,7 +665,7 @@
     Pips
   </a>
   <a class="game-link mini" href="https://www.nytimes.com/crosswords/game/mini" target="_blank" rel="noopener">
-    <span class="game-tile" style="background:#f0c040;color:#1a1a1a">M</span>
+    <span class="game-tile" style="background:#f0c040;color:#1a1a1a">Mi</span>
     Mini
   </a>
   <a class="game-link midi" href="https://www.nytimes.com/crosswords/game/midi" target="_blank" rel="noopener">
@@ -616,6 +752,7 @@
       </div>
       <span class="add-err" id="add-err"></span>
     </div>
+
   </div>
 
   <div class="section" id="tab-scoring">
@@ -627,15 +764,15 @@
     </div>
     <div class="sref">
       <div class="sref-title">Connections <span style="color:var(--faint);font-weight:400">(max 6pts)</span></div>
-      <div class="sref-row"><span>Reverse rainbow, no mistakes (🟪→🟦→🟩→🟨)</span><span style="font-weight:500;color:var(--text)">6pts</span></div>
-      <div class="sref-row"><span>Purple first, no mistakes</span><span style="font-weight:500;color:var(--text)">5pts</span></div>
-      <div class="sref-row"><span>Any other first colour, no mistakes</span><span style="font-weight:500;color:var(--text)">4pts</span></div>
-      <div class="sref-row"><span>Each mistake</span><span style="font-weight:500;color:var(--text)">−1pt (floor 0)</span></div>
+      <div class="sref-row"><span>Each colour completed</span><span style="font-weight:500;color:var(--text)">1pt</span></div>
+      <div class="sref-row"><span>Purple first, no mistakes</span><span style="font-weight:500;color:var(--text)">+1 bonus</span></div>
+      <div class="sref-row"><span>Reverse rainbow, no mistakes (🟪→🟦→🟩→🟨)</span><span style="font-weight:500;color:var(--text)">+2 bonus</span></div>
+      <div class="sref-row"><span>Mistakes</span><span style="font-weight:500;color:var(--text)">No penalty</span></div>
     </div>
     <div class="sref">
       <div class="sref-title">Pips <span style="color:var(--faint);font-weight:400">(max 6pts — relative)</span></div>
-      <div class="sref-row"><span>Fastest completion of each puzzle</span><span style="font-weight:500;color:var(--text)">2pts</span></div>
-      <div class="sref-row"><span>Any other completion</span><span style="font-weight:500;color:var(--text)">1pt</span></div>
+      <div class="sref-row"><span>Complete Easy / Medium / Hard</span><span style="font-weight:500;color:var(--text)">1pt each</span></div>
+      <div class="sref-row"><span>Fastest time on each difficulty</span><span style="font-weight:500;color:var(--text)">+1pt bonus</span></div>
       <div class="sref-row"><span>Not completed</span><span style="font-weight:500;color:var(--text)">0pts</span></div>
     </div>
     <div class="sref">
@@ -655,6 +792,107 @@
       <div class="sref-row"><span>4 – 6min</span><span style="font-weight:500;color:var(--text)">3pts</span></div>
       <div class="sref-row"><span>6 – 10min</span><span style="font-weight:500;color:var(--text)">2pts</span></div>
       <div class="sref-row"><span>Over 10min</span><span style="font-weight:500;color:var(--text)">1pt</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- Player picker modal for clear scores -->
+<div class="pw-modal-overlay" id="player-pick-modal" style="display:none">
+  <div class="pw-modal-box" style="max-width:320px">
+    <div class="pw-modal-title">Clear scores for…</div>
+    <div class="pw-modal-sub">Choose which player's scores to wipe. All days will be cleared for that player.</div>
+    <div id="player-pick-list" style="display:flex;flex-direction:column;gap:6px;margin:12px 0;max-height:220px;overflow-y:auto;"></div>
+    <div class="pw-actions">
+      <button class="btn" id="player-pick-cancel">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- Password confirmation modal -->
+<div class="pw-modal-overlay" id="pw-modal" style="display:none">
+  <div class="pw-modal-box">
+    <div class="pw-modal-title" id="pw-modal-title">Confirm action</div>
+    <div class="pw-modal-sub" id="pw-modal-sub"></div>
+    <input class="pw-input" id="pw-input" type="password" placeholder="••••" maxlength="20"
+      autocomplete="off" autocorrect="off" autocapitalize="off">
+    <div class="pw-err" id="pw-err"></div>
+    <div class="pw-actions">
+      <button class="btn" id="pw-cancel-btn">Cancel</button>
+      <button class="pw-confirm-btn" id="pw-confirm-btn">Confirm</button>
+    </div>
+  </div>
+</div>
+
+<!-- Patch notes footer -->
+<div class="patch-footer" id="patch-footer">
+  <button class="patch-footer-link" id="patch-notes-btn">
+    <span>📋</span>
+    <span>NYT Games Tracker — Patch Notes v1.1.1</span>
+    <span class="pf-arrow" style="margin-left:auto">↑</span>
+  </button>
+  <div style="display:flex;gap:16px;padding:6px 0;border-top:1px solid var(--border);margin-top:0;">
+    <button class="danger-btn" id="clear-scores-btn">Clear scores</button>
+    <button class="danger-btn" id="wipe-all-btn">Wipe scores &amp; winners</button>
+  </div>
+</div>
+
+<!-- Patch notes modal -->
+<div class="patch-notes-modal" id="patch-notes-modal" style="display:none">
+  <div class="patch-notes-sheet">
+    <div class="patch-handle"></div>
+    <div class="patch-header">
+      <div class="patch-eyebrow">NYT Games Tracker</div>
+      <div class="patch-title">Patch Notes v1.1.1</div>
+      <div class="patch-date">March 2026</div>
+      <button class="patch-close" id="patch-close-btn">✕ Close</button>
+    </div>
+    <div class="patch-body">
+
+      <div class="patch-section">
+        <div class="patch-section-label"><span class="patch-section-icon">⚖️</span>Balance Updates</div>
+        <div class="patch-heading">Connections Scoring Rebalance</div>
+        <p class="patch-p">
+          Following community feedback that the previous Connections scoring felt punishing and disproportionate, we have reworked the scoring rubric. The new system rewards <strong>completion over perfection</strong> — every colour you solve earns a point, and mistakes no longer carry a penalty.
+        </p>
+        <ul class="patch-list">
+          <li><strong>Each colour completed</strong> — 1pt (max 4pts base)</li>
+          <li><strong>Purple first, no mistakes</strong> — +1 bonus point (max 5pts)</li>
+          <li><strong>Reverse rainbow, no mistakes (🟪→🟦→🟩→🟨)</strong> — +2 bonus points (max 6pts)</li>
+          <li><strong>Mistakes</strong> — No longer penalised. Finishing all four categories always scores at least 4pts regardless of how many attempts it took.</li>
+        </ul>
+        <p class="patch-p"><em>This change directly addresses the community's request for a fairer Connections scoring system noted in v1.1 Known Issues.</em></p>
+      </div>
+
+      <div class="patch-section">
+        <div class="patch-section-label"><span class="patch-section-icon">🆕</span>New Features</div>
+        <div class="patch-heading">What's New in v1.0</div>
+        <ul class="patch-list patch-new">
+          <li><strong>Night Mode</strong> — The tracker now launches in dark mode by default, drawing heavy inspiration from the NYT Games visual language. A sun/moon toggle in the top nav lets you switch between dark and light at any time. Your preference is remembered across sessions.</li>
+          <li><strong>Free &amp; Paid Leaderboards</strong> — Recognising that Mini and Midi are subscriber-only games, we've split the leaderboard into two separate tracks. The Free board covers Wordle, Connections, and Pips. The Subscribers board covers all five games. Both are tracked independently in the Winners tab too.</li>
+          <li><strong>Custom Leaderboards</strong> — You can now create your own leaderboards with any combination of games and any subset of players. Custom boards are fully tracked in the Winners tab with their own podium and daily results log. Boards are synced across all devices in real time.</li>
+          <li><strong>Custom Player Cards</strong> — The Enter Scores tab now shows each player as a visual card with their avatar, colour, and a ✓ Done badge once all five games are submitted.</li>
+          <li><strong>Player Colour Picker</strong> — Every player can now be assigned one of twelve vibrant colours. Their colour is used throughout the app — on leaderboard card accents, avatars, and the Winners podium — synced to all devices.</li>
+          <li><strong>Game Integration Buttons</strong> — A sticky shortcut bar now lives just below the navigation. Tap any of the five game tiles to jump directly to that NYT game in a new tab, from any screen in the app.</li>
+        </ul>
+      </div>
+
+      <div class="patch-section">
+        <div class="patch-section-label"><span class="patch-section-icon">🐛</span>Bug Fixes</div>
+        <div class="patch-heading">Resolved This Patch</div>
+        <ul class="patch-list patch-bug">
+          <li><strong>Remove Player Button Not Working</strong> — The remove button in the Players tab was silently failing due to a conflict with the browser's native confirm dialog inside an ES module context. The button has been replaced with a custom in-app confirmation modal that works reliably across all devices and browsers.</li>
+          <li><strong>Player Select Not Working in Scores Tab</strong> — Tapping a player card in the Enter Scores tab was not registering. This was caused by <code>onclick</code> attributes in HTML being unable to reach functions defined inside a <code>&lt;script type="module"&gt;</code> block. The entire interaction system was refactored to use event delegation wired inside the module — player selection now works correctly on all platforms.</li>
+          <li><strong>Mini &amp; Midi Game Date Rollover</strong> — Mini and Midi puzzles reset earlier than other NYT games — 10pm ET on weekdays and 6pm ET on weekends. Scores submitted after these times were previously being filed under the wrong day. The tracker now uses a game-aware date key that automatically routes Mini and Midi scores to the correct day based on ET time, regardless of the user's local timezone.</li>
+          <li><strong>Pips Scoring Not Working</strong> — When players pasted their Pips results, the tracker was showing 0/3 solved for everyone. The issue was that the tracker was looking for the wrong format in the share text. We've updated it to correctly read the format the NYT app actually sends — for example, <em>Pips #208 Easy 🟢0:50</em> — and it now properly records each completed difficulty (Easy, Medium, Hard) along with the time. Points are awarded correctly: 1pt for completing each difficulty, with a bonus point going to whoever was fastest on each one.</li>
+        </ul>
+      </div>
+
+      <div class="patch-section">
+        <div class="patch-section-label"><span class="patch-section-icon">⚠️</span>Known Issues</div>
+        <div class="patch-heading">No Known Issues This Patch</div>
+        <p class="patch-p"><em>All previously reported issues have been resolved in this update. We'll continue monitoring and will document anything new as it comes up.</em></p>
+      </div>
+
     </div>
   </div>
 </div>
@@ -682,7 +920,7 @@
         <span class="game-checkbox-check">✓</span>
       </div>
       <div class="game-checkbox-item" data-game="mini">
-        <span class="game-checkbox-tile" style="background:#f0c040;color:#1a1a1a">M</span>
+        <span class="game-checkbox-tile" style="background:#f0c040;color:#1a1a1a">Mi</span>
         <span class="game-checkbox-label">Mini</span>
         <span class="game-checkbox-check">✓</span>
       </div>
@@ -818,20 +1056,65 @@ function avSt(name){
   const bg=getPlayerColor(name), fg=getPlayerFg(name);
   return`background:${bg};color:${fg}`;
 }
-function today(){ return new Date().toISOString().slice(0,10); }
+// ── Date key logic ──────────────────────────────────────
+// NYT standard rollover: midnight ET
+// Mini/Midi rollover: 10pm ET weekdays, 6pm ET weekends
+// If a score is submitted AFTER the game's reset time, it belongs to the NEXT day.
+
+function etNow(){
+  // Returns a Date object representing the current moment in US/Eastern time
+  return new Date(new Date().toLocaleString('en-US', {timeZone:'America/New_York'}));
+}
+
+function today(){
+  // Standard date key — uses ET midnight rollover (same as NYT for most games)
+  const et = etNow();
+  const y = et.getFullYear();
+  const m = String(et.getMonth()+1).padStart(2,'0');
+  const d = String(et.getDate()).padStart(2,'0');
+  return `${y}-${m}-${d}`;
+}
+
+function dateKeyForGame(game){
+  // For mini and midi, use the earlier NYT crossword reset time
+  if(game !== 'mini' && game !== 'midi') return today();
+  const et = etNow();
+  const dow = et.getDay(); // 0=Sun, 6=Sat
+  const isWeekend = (dow === 0 || dow === 6);
+  const resetHour = isWeekend ? 18 : 22; // 6pm weekends, 10pm weekdays (ET)
+  const hour = et.getHours();
+  if(hour >= resetHour){
+    // Past the reset — this score belongs to tomorrow
+    const tomorrow = new Date(et);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    const y = tomorrow.getFullYear();
+    const m = String(tomorrow.getMonth()+1).padStart(2,'0');
+    const d = String(tomorrow.getDate()).padStart(2,'0');
+    return `${y}-${m}-${d}`;
+  }
+  return today();
+}
 function wkStart(d){ const dt=new Date(d); dt.setUTCHours(0,0,0,0); dt.setUTCDate(dt.getUTCDate()-dt.getUTCDay()); return dt.toISOString().slice(0,10); }
 function moStart(d){ return d.slice(0,7)+'-01'; }
 function allKnown(){ const s=new Set(state.players); for(const day of Object.values(state.scores)) for(const p of Object.keys(day)) s.add(p); return[...s]; }
 
 // ── scoring ────────────────────────────────────────────
 function wPts(g){ return g==null?null:g==='X'?0:Math.max(0,7-g); }
-function cPts(fc,rr,m){ return Math.max(0,(rr?6:fc==='P'?5:4)-m); }
+function cPts(fc,rr,m,solved){
+  // 1pt per colour completed (max 4)
+  const base = solved ? solved.length : (fc ? 4 : 0);
+  // Bonus for purple first, no mistakes
+  const purpleBonus = (fc==='P' && m===0) ? 1 : 0;
+  // Bonus for reverse rainbow (PBGY order), no mistakes — replaces purple bonus
+  const rrBonus = (rr && m===0) ? 2 : 0;
+  return base + Math.max(purpleBonus, rrBonus);
+}
 function mnPts(s){ if(!s&&s!==0)return null; return s<=30?6:s<=60?5:s<=120?4:s<=180?3:s<=300?2:1; }
 function mdPts(s){ if(!s&&s!==0)return null; return s<=60?6:s<=120?5:s<=240?4:s<=360?3:s<=600?2:1; }
 function nonPips(raw){
   const p={};
   if(raw.wordle!=null)      p.wordle=wPts(raw.wordle);
-  if(raw.connections!=null) p.connections=cPts(raw.connections.firstColor,raw.connections.reverseRainbow,raw.connections.mistakes);
+  if(raw.connections!=null) p.connections=cPts(raw.connections.firstColor,raw.connections.reverseRainbow,raw.connections.mistakes,raw.connections.solvedColors);
   if(raw.mini!=null)        p.mini=mnPts(raw.mini);
   if(raw.midi!=null)        p.midi=mdPts(raw.midi);
   return p;
@@ -839,10 +1122,18 @@ function nonPips(raw){
 function pipsPts(ds){
   const pp={}; for(const[p,raw] of Object.entries(ds)) if(raw.pips) pp[p]=raw.pips.puzzles||[];
   const pl=Object.keys(pp), res={}; pl.forEach(p=>res[p]=0);
+  // Score each of Easy(0), Medium(1), Hard(2) separately
   for(let i=0;i<3;i++){
-    const ents=pl.map(p=>({p,s:pp[p][i]?.solved||false,t:pp[p][i]?.time??null}));
-    const wt=ents.filter(e=>e.s&&e.t!=null), fast=wt.length?Math.min(...wt.map(e=>e.t)):null;
-    for(const e of ents){ if(!e.s)continue; res[e.p]+=(fast!=null&&e.t!=null)?(e.t===fast?2:1):1; }
+    const ents=pl.map(p=>({p,s:(pp[p][i]?.solved||false),t:(pp[p][i]?.time??null)}));
+    const solvedEnts=ents.filter(e=>e.s);
+    if(!solvedEnts.length)continue;
+    const withTimes=solvedEnts.filter(e=>e.t!=null);
+    const fast=withTimes.length?Math.min(...withTimes.map(e=>e.t)):null;
+    for(const e of solvedEnts){
+      // 1pt for completion + 1pt bonus for fastest
+      res[e.p]+=1;
+      if(fast!=null && e.t!=null && e.t===fast) res[e.p]+=1;
+    }
   }
   return res;
 }
@@ -860,7 +1151,7 @@ function dayW(dk,players,scores, mode='paid'){
         const pts=nonPips(raw); if(raw.pips)pts.pips=pm[p]||0; t=sum(pts);
       } else {
         if(raw.wordle!=null) t+=wPts(raw.wordle)||0;
-        if(raw.connections!=null) t+=cPts(raw.connections.firstColor,raw.connections.reverseRainbow,raw.connections.mistakes)||0;
+        if(raw.connections!=null) t+=cPts(raw.connections.firstColor,raw.connections.reverseRainbow,raw.connections.mistakes,raw.connections.solvedColors)||0;
         if(raw.pips) t+=pm[p]||0;
       }
       return{p,t};
@@ -888,13 +1179,23 @@ function syncDot(s){ const el=document.getElementById('sync-dot'); el.className=
 
 // ── parse ──────────────────────────────────────────────
 function parsePips(text){
+  // pz[0]=Easy, pz[1]=Medium, pz[2]=Hard
   const pz=Array.from({length:3},()=>({solved:false,time:null}));
-  const rxs=[/(?:Puzzle\s*|#\s*)(\d)\s*[:\-–]\s*(\d{1,2}):(\d{2})/gi,/^(\d)\.\s*(\d{1,2}):(\d{2})/gim];
+  const diffMap={easy:0,medium:1,hard:2};
   let found=false;
-  for(const rx of rxs){let m;while((m=rx.exec(text))!==null){const i=+m[1]-1;if(i>=0&&i<3){pz[i].solved=true;pz[i].time=+m[2]*60+ +m[3];found=true;}}}
-  if(!found){const sm=text.match(/(\d)\s*\/\s*3\s*puzzles?/i)||text.match(/Solved\s+(\d)/i);const c=sm?Math.min(3,+sm[1]):Math.min(3,text.split(/\r?\n/).filter(l=>/🟫/.test(l)).length);for(let i=0;i<c;i++)pz[i].solved=true;}
+  const lines=text.split(/\r?\n/);
+  for(const line of lines){
+    const dm=line.match(/\b(easy|medium|hard)\b/i);
+    if(!dm)continue;
+    const idx=diffMap[dm[1].toLowerCase()];
+    if(idx==null)continue;
+    const tm=line.match(/(\d{1,2}):(\d{2})/);
+    if(tm){pz[idx].solved=true;pz[idx].time=+tm[1]*60+ +tm[2];found=true;}
+    else{pz[idx].solved=true;found=true;}
+  }
   return{puzzles:pz};
 }
+
 function doParse(text){
   parsedGames={};
   if(!text.trim())return;
@@ -911,7 +1212,16 @@ function doParse(text){
   const mdm=text.match(/Midi(?:\s+Crossword)?[^\n]*?(\d{1,2}):(\d{2})/i);if(mdm)parsedGames.midi=+mdm[1]*60+ +mdm[2];
   if(/\bPips\b/i.test(text))parsedGames.pips=parsePips(text);
 }
-function fmtPips(raw){if(!raw?.puzzles)return'–';const s=raw.puzzles.filter(p=>p.solved);const wt=s.filter(p=>p.time!=null);if(wt.length)return s.map(p=>p.solved?(p.time!=null?`P${raw.puzzles.indexOf(p)+1}:${Math.floor(p.time/60)}:${String(p.time%60).padStart(2,'0')}`:`P${raw.puzzles.indexOf(p)+1}:done`):null).filter(Boolean).join(' ');return`${s.length}/3 solved`;}
+function fmtPips(raw){
+  if(!raw?.puzzles)return'–';
+  const labels=['Easy','Med','Hard'];
+  const parts=raw.puzzles.map((p,i)=>{
+    if(!p.solved)return null;
+    const t=p.time!=null?`${Math.floor(p.time/60)}:${String(p.time%60).padStart(2,'0')}`:'done';
+    return`${labels[i]}:${t}`;
+  }).filter(Boolean);
+  return parts.length?parts.join(' '):'0/3 solved';
+}
 function fmtRaw(g,raw){if(g==='wordle')return`${raw==='X'?'X':raw}/6`;if(g==='connections'){const o=raw.solvedColors?.length?raw.solvedColors.join('→'):raw.firstColor;return`${raw.mistakes}mis${raw.reverseRainbow?' 🌈':''} ${o}`;}if(g==='mini'||g==='midi')return`${Math.floor(raw/60)}:${String(raw%60).padStart(2,'0')}`;if(g==='pips')return fmtPips(raw);return raw;}
 
 // ── render ─────────────────────────────────────────────
@@ -942,7 +1252,7 @@ function renderLBPaid(){
     return{p,raw,pts,t};
   }).filter(r=>r.raw.mini!=null||r.raw.midi!=null).sort((a,b)=>b.t-a.t);
   const maxT=ranked[0]?.t||0, isW=ranked.filter(r=>r.t===maxT&&maxT>0).length===1;
-  const note=anyP&&!anyPT?'<div class="info-banner">Pips times not found — all completions scoring 1pt.</div>':anyPT?'<div class="info-banner">Pips scores update as more players submit.</div>':'';
+  const note=anyP&&!anyPT?'<div class="info-banner">Pips: 1pt per puzzle completed, +1pt bonus for fastest time each difficulty.</div>':anyPT?'<div class="info-banner">Pips scores update as more players submit (relative fastest gets bonus).</div>':'';
   el.innerHTML='<div class="lb-section-label">All 5 games · Max 30pts</div>'+buildLBHtml(ranked,games,isW,maxT,note);
 }
 
@@ -957,13 +1267,13 @@ function renderLBFree(){
     const raw=ds[p]||{};
     const pts={};
     if(raw.wordle!=null) pts.wordle=wPts(raw.wordle);
-    if(raw.connections!=null) pts.connections=cPts(raw.connections.firstColor,raw.connections.reverseRainbow,raw.connections.mistakes);
+    if(raw.connections!=null) pts.connections=cPts(raw.connections.firstColor,raw.connections.reverseRainbow,raw.connections.mistakes,raw.connections.solvedColors);
     if(raw.pips) pts.pips=pm[p]||0;
     const t=games.reduce((a,g)=>a+(pts[g]||0),0);
     return{p,raw,pts,t};
   }).sort((a,b)=>b.t-a.t);
   const maxT=ranked[0]?.t||0, isW=ranked.filter(r=>r.t===maxT&&maxT>0).length===1;
-  const note=anyP&&!anyPT?'<div class="info-banner">Pips times not found — all completions scoring 1pt.</div>':anyPT?'<div class="info-banner">Pips scores update as more players submit.</div>':'';
+  const note=anyP&&!anyPT?'<div class="info-banner">Pips: 1pt per puzzle completed, +1pt bonus for fastest time each difficulty.</div>':anyPT?'<div class="info-banner">Pips scores update as more players submit (relative fastest gets bonus).</div>':'';
   el.innerHTML='<div class="lb-section-label">Free games only · Max 18pts</div>'+buildLBHtml(ranked,games,isW,maxT,note);
 }
 
@@ -973,7 +1283,7 @@ const GAME_META = {
   wordle:      { label:'Wordle',      tile:'W',  bg:'#6aaa64', fg:'#fff' },
   connections: { label:'Connections', tile:'C',  bg:'#b59fec', fg:'#fff' },
   pips:        { label:'Pips',        tile:'P',  bg:'#e67e3a', fg:'#fff' },
-  mini:        { label:'Mini',        tile:'M',  bg:'#f0c040', fg:'#1a1a1a' },
+  mini:        { label:'Mini',        tile:'Mi', bg:'#f0c040', fg:'#1a1a1a' },
   midi:        { label:'Midi',        tile:'Md', bg:'#5ba4cf', fg:'#fff' },
 };
 
@@ -1029,7 +1339,7 @@ function buildCustomLBHtml(board){
     const raw=ds[p]||{};
     const pts={};
     if(games.includes('wordle')&&raw.wordle!=null) pts.wordle=wPts(raw.wordle);
-    if(games.includes('connections')&&raw.connections!=null) pts.connections=cPts(raw.connections.firstColor,raw.connections.reverseRainbow,raw.connections.mistakes);
+    if(games.includes('connections')&&raw.connections!=null) pts.connections=cPts(raw.connections.firstColor,raw.connections.reverseRainbow,raw.connections.mistakes,raw.connections.solvedColors);
     if(games.includes('mini')&&raw.mini!=null) pts.mini=mnPts(raw.mini);
     if(games.includes('midi')&&raw.midi!=null) pts.midi=mdPts(raw.midi);
     if(games.includes('pips')&&raw.pips) pts.pips=pm[p]||0;
@@ -1037,7 +1347,7 @@ function buildCustomLBHtml(board){
     return{p,raw,pts,t:tot};
   }).sort((a,b)=>b.t-a.t);
   const maxT=ranked[0]?.t||0, isW=ranked.filter(r=>r.t===maxT&&maxT>0).length===1;
-  const note=anyP&&!anyPT?'<div class="info-banner">Pips times not found — all completions scoring 1pt.</div>':anyPT?'<div class="info-banner">Pips scores update as more players submit.</div>':'';
+  const note=anyP&&!anyPT?'<div class="info-banner">Pips: 1pt per puzzle completed, +1pt bonus for fastest time each difficulty.</div>':anyPT?'<div class="info-banner">Pips scores update as more players submit (relative fastest gets bonus).</div>':'';
   const gamePills = games.map(g=>{ const m=GAME_META[g]||{tile:g,bg:'#888',fg:'#fff'}; return`<span style="display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:3px;background:${m.bg};color:${m.fg};font-size:11px;font-weight:900;font-family:var(--sans)">${m.tile}</span>`; }).join('');
   const header = `<div class="custom-lb-header"><div><div class="custom-lb-name">${board.name}</div><div style="display:flex;gap:4px;margin-top:6px;flex-wrap:wrap">${gamePills}</div></div><div style="display:flex;gap:6px"><button class="custom-lb-edit" data-edit-board="${board.id}">Edit</button><button class="custom-lb-delete" data-del-board="${board.id}">Delete</button></div></div>`;
   const maxPts = games.reduce((a,g)=>a+(g==='pips'?6:6),0);
@@ -1115,7 +1425,7 @@ function dayWCustom(dk, players, scores, board){
     const raw=ds[p]||{};
     let t=0;
     if(games.includes('wordle')&&raw.wordle!=null) t+=wPts(raw.wordle)||0;
-    if(games.includes('connections')&&raw.connections!=null) t+=cPts(raw.connections.firstColor,raw.connections.reverseRainbow,raw.connections.mistakes)||0;
+    if(games.includes('connections')&&raw.connections!=null) t+=cPts(raw.connections.firstColor,raw.connections.reverseRainbow,raw.connections.mistakes,raw.connections.solvedColors)||0;
     if(games.includes('mini')&&raw.mini!=null) t+=mnPts(raw.mini)||0;
     if(games.includes('midi')&&raw.midi!=null) t+=mdPts(raw.midi)||0;
     if(games.includes('pips')&&raw.pips) t+=pm[p]||0;
@@ -1172,14 +1482,19 @@ function renderEntryArea(){
   const el=document.getElementById('entry-area');
   if(!selectedPlayer){el.innerHTML='<div class="no-sel-prompt"><strong>Select a player above</strong>Tap a card to choose who you\'re entering scores for.</div>';return;}
   const ds=state.scores[today()]||{}, has=ds[selectedPlayer]&&Object.keys(ds[selectedPlayer]).length>0;
-  el.innerHTML=`<div class="entry-form"><div class="entry-head"><div class="entry-av" style="${avSt(selectedPlayer)}">${ini(selectedPlayer)}</div><div><div class="entry-name">${selectedPlayer}</div><div class="entry-sub">${has?'Has some scores today — new entries overwrite existing ones':'No scores entered yet today'}</div></div><button class="btn btn-sm" id="change-btn" style="margin-left:auto">Change</button></div><span class="lbl">Paste NYT share text</span><textarea class="paste-area" id="paste-ta" placeholder="Paste Wordle, Connections, Mini, Midi, or Pips results here…"></textarea><div id="preview-area"></div><div id="entry-status"></div><div style="margin-top:12px;display:flex;justify-content:flex-end;gap:8px"><button class="btn" id="clear-btn">Clear</button><button class="btn btn-p" id="save-btn">Save scores</button></div><div style="margin-top:14px;background:var(--card);border:0.5px solid var(--border2);border-radius:var(--rm);padding:12px 14px"><div style="font-size:12px;font-weight:500;color:var(--text);margin-bottom:6px">📝 Entering Mini & Midi scores</div><div style="font-size:12px;color:var(--sub);line-height:1.6;margin-bottom:8px">Just type <strong style=\"color:var(--text)\">Mini</strong> or <strong style=\"color:var(--text)\">Midi</strong> followed by your time in the box above. No need to paste from the NYT app.</div><div style="background:var(--bg);border-radius:6px;padding:8px 10px;font-size:12px;font-family:var(--mono);color:var(--text);line-height:1.8">Mini 1:24<br>Midi 4:05</div><div style="font-size:11px;color:var(--faint);margin-top:8px">Re-submitting a game overwrites that game's score for today.</div></div></div>`;
+  el.innerHTML=`<div class="entry-form"><div class="entry-head"><div class="entry-av" style="${avSt(selectedPlayer)}">${ini(selectedPlayer)}</div><div><div class="entry-name">${selectedPlayer}</div><div class="entry-sub">${has?'Has some scores today — Mini/Midi reset at 10pm ET (6pm weekends)':'No scores entered yet today'}</div></div><button class="btn btn-sm" id="change-btn" style="margin-left:auto">Change</button></div><span class="lbl">Paste NYT share text</span><textarea class="paste-area" id="paste-ta" placeholder="Paste Wordle, Connections, Mini, Midi, or Pips results here…"></textarea><div id="preview-area"></div><div id="entry-status"></div><div style="margin-top:12px;display:flex;justify-content:flex-end;gap:8px"><button class="btn" id="clear-btn">Clear</button><button class="btn btn-p" id="save-btn">Save scores</button></div></div>`;
 
   document.getElementById('change-btn').addEventListener('click', ()=>{ selectedPlayer=null; renderGrid(); renderEntryArea(); });
   document.getElementById('clear-btn').addEventListener('click', ()=>{ parsedGames={}; document.getElementById('paste-ta').value=''; document.getElementById('preview-area').innerHTML=''; setStatus('','ok'); });
   document.getElementById('save-btn').addEventListener('click', async ()=>{
     if(!Object.keys(parsedGames).length){setStatus('No scores detected.','err');return;}
-    const t=today(); if(!state.scores[t])state.scores[t]={}; if(!state.scores[t][selectedPlayer])state.scores[t][selectedPlayer]={};
-    Object.assign(state.scores[t][selectedPlayer],parsedGames);
+    // Save each game under its correct date key (mini/midi may roll to next day early)
+    for(const [game, val] of Object.entries(parsedGames)){
+      const t = dateKeyForGame(game);
+      if(!state.scores[t]) state.scores[t]={};
+      if(!state.scores[t][selectedPlayer]) state.scores[t][selectedPlayer]={};
+      state.scores[t][selectedPlayer][game] = val;
+    }
     await push(); parsedGames={};
     document.getElementById('paste-ta').value=''; document.getElementById('preview-area').innerHTML='';
     setStatus(`Scores saved for ${selectedPlayer}!`,'ok');
@@ -1450,6 +1765,125 @@ document.getElementById('colour-save-btn').addEventListener('click', async ()=>{
   await push();
 });
 
+// ── patch notes ───────────────────────────────────────
+document.getElementById('patch-notes-btn').addEventListener('click', ()=>{
+  document.getElementById('patch-notes-modal').style.display='flex';
+});
+document.getElementById('patch-close-btn').addEventListener('click', ()=>{
+  document.getElementById('patch-notes-modal').style.display='none';
+});
+document.getElementById('patch-notes-modal').addEventListener('click', e=>{
+  if(e.target===document.getElementById('patch-notes-modal'))
+    document.getElementById('patch-notes-modal').style.display='none';
+});
+
+// ── danger zone ───────────────────────────────────────
+let pendingDangerAction = null;
+const DANGER_PW = 'Luna';
+
+function openPwModal(title, sub, action){
+  pendingDangerAction = action;
+  document.getElementById('pw-modal-title').textContent = title;
+  document.getElementById('pw-modal-sub').textContent = sub;
+  document.getElementById('pw-input').value = '';
+  document.getElementById('pw-err').textContent = '';
+  document.getElementById('pw-modal').style.display = 'flex';
+  setTimeout(()=>document.getElementById('pw-input').focus(), 50);
+}
+
+let clearTargetPlayer = null;
+
+document.getElementById('clear-scores-btn').addEventListener('click', ()=>{
+  // Show player picker first
+  const list = document.getElementById('player-pick-list');
+  list.innerHTML = state.players.map(p=>`
+    <div class="player-pick-item" data-pick="${p}">
+      <div class="player-pick-av" style="${avSt(p)}">${ini(p)}</div>
+      <span class="player-pick-name">${p}</span>
+      <span class="player-pick-arrow">→</span>
+    </div>`).join('');
+  list.querySelectorAll('.player-pick-item').forEach(el=>{
+    el.addEventListener('click', ()=>{
+      clearTargetPlayer = el.dataset.pick;
+      document.getElementById('player-pick-modal').style.display = 'none';
+      openPwModal(
+        `Clear scores for ${clearTargetPlayer}`,
+        `This will permanently delete all daily scores for ${clearTargetPlayer} across every day. Their player profile and colour will be kept.`,
+        'clear-one-player'
+      );
+    });
+  });
+  document.getElementById('player-pick-modal').style.display = 'flex';
+});
+
+document.getElementById('player-pick-cancel').addEventListener('click', ()=>{
+  document.getElementById('player-pick-modal').style.display = 'none';
+  clearTargetPlayer = null;
+});
+
+document.getElementById('player-pick-modal').addEventListener('click', e=>{
+  if(e.target === document.getElementById('player-pick-modal')){
+    document.getElementById('player-pick-modal').style.display = 'none';
+    clearTargetPlayer = null;
+  }
+});
+
+document.getElementById('wipe-all-btn').addEventListener('click', ()=>{
+  openPwModal(
+    'Wipe All Scores & Winners',
+    'This will permanently delete all scores AND all winner history. Player names, custom boards, and colours will be kept. This cannot be undone. Enter the password to continue.',
+    'wipe-all'
+  );
+});
+
+document.getElementById('pw-cancel-btn').addEventListener('click', ()=>{
+  document.getElementById('pw-modal').style.display = 'none';
+  pendingDangerAction = null;
+});
+
+document.getElementById('pw-confirm-btn').addEventListener('click', async ()=>{
+  const entered = document.getElementById('pw-input').value;
+  const errEl = document.getElementById('pw-err');
+  if(entered !== DANGER_PW){
+    errEl.textContent = 'Incorrect password.';
+    document.getElementById('pw-input').value = '';
+    document.getElementById('pw-input').focus();
+    return;
+  }
+  document.getElementById('pw-modal').style.display = 'none';
+  if(pendingDangerAction === 'clear-one-player' && clearTargetPlayer){
+    // Remove this player's scores from every day
+    for(const day of Object.keys(state.scores)){
+      if(state.scores[day][clearTargetPlayer] !== undefined){
+        delete state.scores[day][clearTargetPlayer];
+        if(!Object.keys(state.scores[day]).length) delete state.scores[day];
+      }
+    }
+    clearTargetPlayer = null;
+    await push();
+  } else if(pendingDangerAction === 'wipe-all'){
+    state.scores = {};
+    // Wipe winner history by clearing scores (winners are derived from scores)
+    // Also clear any cached win data
+    await push();
+  }
+  pendingDangerAction = null;
+  renderAll();
+});
+
+document.getElementById('pw-input').addEventListener('keydown', e=>{
+  if(e.key === 'Enter') document.getElementById('pw-confirm-btn').click();
+  if(e.key === 'Escape') document.getElementById('pw-cancel-btn').click();
+});
+
+// Close on backdrop click
+document.getElementById('pw-modal').addEventListener('click', e=>{
+  if(e.target === document.getElementById('pw-modal')){
+    document.getElementById('pw-modal').style.display = 'none';
+    pendingDangerAction = null;
+  }
+});
+
 // ── theme toggle ───────────────────────────────────────
 (function(){
   const saved = localStorage.getItem('nyt-theme');
@@ -1475,6 +1909,7 @@ onSnapshot(DOC, snap=>{
   document.getElementById('app-nav').style.display='flex';
   document.getElementById('games-bar').style.display='flex';
   document.getElementById('app').style.display='block';
+  document.getElementById('patch-footer').style.display='block';
   renderAll();
 }, err=>{
   syncDot('err'); console.error(err);
