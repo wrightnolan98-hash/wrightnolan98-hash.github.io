@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>New York Times Games Tracker</title>
+<title>NYT Games Tracker</title>
 <style>
   /* ── NYT Games style ──────────────────────────────── */
   @import url('https://fonts.googleapis.com/css2?family=Cheltenham:ital,wght@0,400;0,700;1,400&family=Franklin+Gothic+Medium&display=swap');
@@ -66,26 +66,48 @@
   .nyt-nav {
     background: var(--bg);
     border-bottom: 1px solid var(--border);
-    padding: 0 1rem;
+    padding: 0 12px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 48px;
+    height: 52px;
     position: sticky;
     top: 0;
     z-index: 100;
   }
   .nyt-logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    line-height: 1;
+    flex-shrink: 1;
+    min-width: 0;
+  }
+  .logo-nyt {
     font-family: var(--serif);
-    font-size: 22px;
+    font-size: 18px;
     font-weight: 700;
     letter-spacing: -0.5px;
     color: var(--text);
-    line-height: 1;
+    background: var(--text);
+    color: var(--bg);
+    padding: 3px 7px;
+    border-radius: 2px;
+    flex-shrink: 0;
   }
-  .nyt-logo span { font-style: italic; font-weight: 400; font-size: 13px; color: var(--sub); display: block; letter-spacing: 0.5px; font-family: var(--sans); }
-  .nav-right { display: flex; align-items: center; gap: 10px; }
-  .sync-dot { font-size: 11px; padding: 3px 9px; border-radius: 2px; font-weight: 700; letter-spacing: .3px; text-transform: uppercase; background: var(--card); color: var(--faint); border: 1px solid var(--border); font-family: var(--sans); }
+  .logo-games {
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: .4px;
+    text-transform: uppercase;
+    color: var(--sub);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .nav-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+  .sync-dot { font-size: 10px; padding: 3px 8px; border-radius: 2px; font-weight: 700; letter-spacing: .3px; text-transform: uppercase; background: var(--card); color: var(--faint); border: 1px solid var(--border); font-family: var(--sans); white-space: nowrap; }
   .sync-dot.ok  { background: var(--green-bg); color: var(--green); border-color: var(--green); }
   .sync-dot.err { background: #2e1010; color: #ff6b6b; border-color: #8b2020; }
   body.light .sync-dot.ok  { background: #e8f5e4; color: #538d4e; border-color: #a0d09a; }
@@ -347,7 +369,7 @@
 
   /* ── Loading ── */
   .loading { position: fixed; inset: 0; background: var(--bg); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; z-index: 1000; }
-  .loading-logo { font-family: var(--serif); font-size: 28px; font-weight: 700; color: var(--text); letter-spacing: -0.5px; }
+  .loading-logo { font-family: var(--serif); font-size: 26px; font-weight: 700; color: var(--text); letter-spacing: -0.5px; text-align: center; line-height: 1.2; }
   .loading-sub { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--sub); font-family: var(--sans); }
   .spinner { width: 28px; height: 28px; border: 2px solid var(--border2); border-top-color: var(--text); border-radius: 50%; animation: spin .7s linear infinite; margin-top: 8px; }
   @keyframes spin { to { transform: rotate(360deg); } }
@@ -480,13 +502,13 @@
 <body>
 
 <div class="loading" id="loading">
-  <div class="loading-logo">New York Times Games Tracker</div>
+  <div class="loading-logo">NYT Games<br>Tracker</div>
   <div class="loading-sub">Loading your scores</div>
   <div class="spinner"></div>
 </div>
 
 <nav class="nyt-nav" id="app-nav" style="display:none">
-  <div class="nyt-logo">New York Times Games Tracker<span>Score &amp; Leaderboard</span></div>
+  <div class="nyt-logo"><span class="logo-nyt">NYT</span><span class="logo-games">Games Tracker</span></div>
   <div class="nav-right">
     <button class="theme-btn" id="theme-btn" title="Toggle light/dark">☀️</button>
     <span class="sync-dot" id="sync-dot">Syncing…</span>
