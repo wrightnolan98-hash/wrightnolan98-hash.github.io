@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NYT Games Tracker</title>
+<title>New York Times Games Tracker</title>
 <style>
   /* ── NYT Games style ──────────────────────────────── */
   @import url('https://fonts.googleapis.com/css2?family=Cheltenham:ital,wght@0,400;0,700;1,400&family=Franklin+Gothic+Medium&display=swap');
@@ -107,7 +107,7 @@
   .app { max-width: 680px; margin: 0 auto; padding: 1.25rem 1rem 3rem; }
 
   /* date line under header */
-  .date-line { font-family: var(--sans); font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--sub); margin-bottom: 1.25rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border); }
+  .date-line { font-family: var(--sans); font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--sub); margin-bottom: 1.25rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border); text-align: center; }
 
   /* ── Tabs ── */
   .tabs {
@@ -134,8 +134,17 @@
     text-align: center;
     white-space: nowrap;
   }
-  .tab.active { color: var(--text); border-bottom-color: var(--text); }
+  .tab[data-tab="leaderboard"].active { color: #6aaa64; border-bottom-color: #6aaa64; }
+  .tab[data-tab="winners"].active     { color: #c9942a; border-bottom-color: #c9942a; }
+  .tab[data-tab="enter"].active       { color: #5ba4cf; border-bottom-color: #5ba4cf; }
+  .tab[data-tab="players"].active     { color: #b59fec; border-bottom-color: #b59fec; }
+  .tab[data-tab="scoring"].active     { color: #e67e3a; border-bottom-color: #e67e3a; }
   .tab:hover:not(.active) { color: var(--sub); }
+  body.light .tab[data-tab="leaderboard"].active { color: #538d4e; border-bottom-color: #538d4e; }
+  body.light .tab[data-tab="winners"].active     { color: #a07010; border-bottom-color: #a07010; }
+  body.light .tab[data-tab="enter"].active       { color: #185FA5; border-bottom-color: #185FA5; }
+  body.light .tab[data-tab="players"].active     { color: #7c5cbf; border-bottom-color: #7c5cbf; }
+  body.light .tab[data-tab="scoring"].active     { color: #c05a20; border-bottom-color: #c05a20; }
   .section { display: none; }
   .section.active { display: block; }
 
@@ -365,10 +374,10 @@
     background: var(--surface);
     border-bottom: 1px solid var(--border);
     display: flex;
-    align-items: center;
+    align-items: stretch;
     justify-content: center;
-    gap: 4px;
-    padding: 0 8px;
+    gap: 0;
+    padding: 0;
     overflow-x: auto;
     scrollbar-width: none;
     -webkit-overflow-scrolling: touch;
@@ -381,41 +390,103 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 3px;
-    padding: 8px 10px;
+    justify-content: center;
+    gap: 5px;
+    padding: 10px 14px;
     text-decoration: none;
     color: var(--sub);
     font-family: var(--sans);
     font-size: 9px;
     font-weight: 700;
-    letter-spacing: .6px;
+    letter-spacing: .8px;
     text-transform: uppercase;
     white-space: nowrap;
-    border-bottom: 2px solid transparent;
-    transition: color .12s, border-color .12s;
-    flex-shrink: 0;
+    flex: 1;
+    border-right: 1px solid var(--border);
+    border-bottom: 3px solid transparent;
+    transition: all .15s;
+    position: relative;
   }
-  .game-link:hover { color: var(--text); border-bottom-color: var(--text); }
-  .game-link .game-icon { font-size: 16px; line-height: 1; }
-  .game-link.wordle   { --g: #6aaa64; }
-  .game-link.connections { --g: #b59fec; }
-  .game-link.mini     { --g: #f9d870; }
-  .game-link.midi     { --g: #f9d870; }
-  .game-link.pips     { --g: #cd7d3c; }
-  .game-link:hover .game-icon { filter: brightness(1.2); }
+  .game-link:last-child { border-right: none; }
+  .game-link:hover {
+    color: var(--text);
+    background: var(--card2);
+    border-bottom-color: var(--gc);
+  }
+  .game-link::after {
+    content: '↗';
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    font-size: 8px;
+    opacity: 0;
+    transition: opacity .15s;
+  }
+  .game-link:hover::after { opacity: .5; }
+  .game-tile {
+    width: 22px;
+    height: 22px;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: 0;
+    line-height: 1;
+    transition: transform .15s;
+  }
+  .game-link:hover .game-tile { transform: scale(1.12); }
+  .game-link.wordle      { --gc: #6aaa64; }
+  .game-link.connections { --gc: #b59fec; }
+  .game-link.pips        { --gc: #e67e3a; }
+  .game-link.mini        { --gc: #f0c040; }
+  .game-link.midi        { --gc: #5ba4cf; }
   body.light .games-bar { background: #fff; }
+  body.light .game-link:hover { background: #f5f5f5; }
+
+  /* ── Custom leaderboards ── */
+  .lb-tabs-row { display:flex; align-items:center; gap:6px; margin-bottom:1.25rem; flex-wrap:wrap; }
+  .lb-tab-btn { font-family:var(--sans); font-size:11px; font-weight:700; letter-spacing:.4px; text-transform:uppercase; padding:7px 14px; border-radius:2px; cursor:pointer; border:1px solid var(--border2); background:var(--card); color:var(--sub); transition:all .12s; white-space:nowrap; }
+  .lb-tab-btn.active { background:var(--text); color:var(--bg); border-color:var(--text); }
+  .lb-tab-btn.custom-active { background:var(--custom-c, #5ba4cf); color:#fff; border-color:var(--custom-c, #5ba4cf); }
+  .lb-tab-btn.lb-tab-custom { text-transform:uppercase; }
+  .lb-add-btn { font-family:var(--sans); font-size:11px; font-weight:700; letter-spacing:.4px; text-transform:uppercase; padding:7px 12px; border-radius:2px; cursor:pointer; border:1px dashed var(--border2); background:none; color:var(--faint); transition:all .12s; white-space:nowrap; }
+  .lb-add-btn:hover { border-color:var(--sub); color:var(--sub); }
+  .game-checkbox-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin:12px 0 16px; }
+  .game-checkbox-item { display:flex; align-items:center; gap:8px; padding:8px 10px; background:var(--card2); border:1px solid var(--border); border-radius:var(--r); cursor:pointer; transition:all .12s; }
+  .game-checkbox-item.checked { border-color:var(--text); background:var(--card); }
+  .game-checkbox-tile { width:24px; height:24px; border-radius:3px; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:900; color:#fff; flex-shrink:0; }
+  .game-checkbox-label { font-family:var(--sans); font-size:12px; font-weight:700; color:var(--text); }
+  .game-checkbox-check { margin-left:auto; font-size:14px; opacity:0; transition:opacity .12s; }
+  .game-checkbox-item.checked .game-checkbox-check { opacity:1; }
+  .player-checkbox-item { display:flex; align-items:center; gap:10px; padding:7px 10px; background:var(--card2); border:1px solid var(--border); border-radius:var(--r); cursor:pointer; transition:all .12s; }
+  .player-checkbox-item.checked { border-color:var(--text); background:var(--card); }
+  .player-checkbox-av { width:26px; height:26px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; flex-shrink:0; }
+  .player-checkbox-name { font-family:var(--sans); font-size:13px; font-weight:700; flex:1; }
+  .player-checkbox-check { font-size:14px; opacity:0; transition:opacity .12s; margin-left:auto; }
+  .player-checkbox-item.checked .player-checkbox-check { opacity:1; }
+  .custom-lb-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
+  .custom-lb-name { font-family:var(--serif); font-size:18px; font-weight:700; text-transform:uppercase; }
+  .custom-lb-edit { font-size:11px; font-weight:700; color:var(--sub); cursor:pointer; background:none; border:1px solid var(--border2); border-radius:var(--r); padding:3px 8px; font-family:var(--sans); letter-spacing:.3px; text-transform:uppercase; transition:all .12s; }
+  .custom-lb-edit:hover { color:var(--text); border-color:var(--sub); }
+  .custom-lb-delete { font-size:11px; font-weight:700; color:var(--faint); cursor:pointer; background:none; border:1px solid var(--border2); border-radius:var(--r); padding:3px 8px; font-family:var(--sans); letter-spacing:.3px; text-transform:uppercase; transition:all .12s; }
+  .custom-lb-delete:hover { color:#e05050; border-color:#e05050; }
+  .modal-name-input { width:100%; font-size:15px; border:1px solid var(--border2); border-radius:var(--r); padding:9px 12px; background:var(--surface); color:var(--text); margin-bottom:10px; font-family:var(--serif); font-weight:700; text-transform:uppercase; }
+  .modal-name-input:focus { outline:none; border-color:var(--text); }
 </style>
 </head>
 <body>
 
 <div class="loading" id="loading">
-  <div class="loading-logo">Games Tracker</div>
+  <div class="loading-logo">New York Times Games Tracker</div>
   <div class="loading-sub">Loading your scores</div>
   <div class="spinner"></div>
 </div>
 
 <nav class="nyt-nav" id="app-nav" style="display:none">
-  <div class="nyt-logo">Games Tracker<span>Score &amp; Leaderboard</span></div>
+  <div class="nyt-logo">New York Times Games Tracker<span>Score &amp; Leaderboard</span></div>
   <div class="nav-right">
     <button class="theme-btn" id="theme-btn" title="Toggle light/dark">☀️</button>
     <span class="sync-dot" id="sync-dot">Syncing…</span>
@@ -424,19 +495,24 @@
 
 <div class="games-bar" id="games-bar" style="display:none">
   <a class="game-link wordle" href="https://www.nytimes.com/games/wordle/index.html" target="_blank" rel="noopener">
-    <span class="game-icon">🟩</span>Wordle
+    <span class="game-tile" style="background:#6aaa64">W</span>
+    Wordle
   </a>
   <a class="game-link connections" href="https://www.nytimes.com/games/connections" target="_blank" rel="noopener">
-    <span class="game-icon">🟪</span>Connections
+    <span class="game-tile" style="background:#b59fec">C</span>
+    Connections
   </a>
   <a class="game-link pips" href="https://www.nytimes.com/games/pips" target="_blank" rel="noopener">
-    <span class="game-icon">🎲</span>Pips
+    <span class="game-tile" style="background:#e67e3a">P</span>
+    Pips
   </a>
   <a class="game-link mini" href="https://www.nytimes.com/crosswords/game/mini" target="_blank" rel="noopener">
-    <span class="game-icon">✏️</span>Mini
+    <span class="game-tile" style="background:#f0c040;color:#1a1a1a">M</span>
+    Mini
   </a>
   <a class="game-link midi" href="https://www.nytimes.com/crosswords/game/midi" target="_blank" rel="noopener">
-    <span class="game-icon">📝</span>Midi
+    <span class="game-tile" style="background:#5ba4cf">Md</span>
+    Midi
   </a>
 </div>
 
@@ -446,24 +522,28 @@
   <div class="tabs" id="tabs">
     <button class="tab active" data-tab="leaderboard">Today</button>
     <button class="tab" data-tab="winners">Winners</button>
-    <button class="tab" data-tab="enter">Enter Scores</button>
+    <button class="tab" data-tab="enter">Scores</button>
     <button class="tab" data-tab="players">Players</button>
     <button class="tab" data-tab="scoring">Scoring</button>
   </div>
 
   <div class="section active" id="tab-leaderboard">
-    <div style="display:flex;gap:6px;margin-bottom:1.25rem;" id="lb-toggle">
-      <button class="lb-toggle-btn active" data-lb="free">🆓 Free</button>
-      <button class="lb-toggle-btn" data-lb="paid">⭐ Subscribers</button>
+    <div class="lb-tabs-row" id="lb-tabs-row">
+      <button class="lb-tab-btn active" data-lb="free">🆓 Free</button>
+      <button class="lb-tab-btn" data-lb="paid">⭐ Subscribers</button>
+      <!-- custom lb tabs injected here by JS -->
+      <button class="lb-add-btn" id="lb-add-btn">+ New board</button>
     </div>
     <div id="lb-free"></div>
     <div id="lb-paid" style="display:none"></div>
+    <div id="lb-custom-panels"></div>
   </div>
 
   <div class="section" id="tab-winners">
-    <div style="display:flex;gap:6px;margin-bottom:1rem;" id="winners-toggle">
-      <button class="lb-toggle-btn active" data-wt="free">🆓 Free</button>
-      <button class="lb-toggle-btn" data-wt="paid">⭐ Subscribers</button>
+    <div class="lb-tabs-row" id="winners-toggle">
+      <button class="lb-tab-btn active" data-wt="free">🆓 Free</button>
+      <button class="lb-tab-btn" data-wt="paid">⭐ Subscribers</button>
+      <!-- custom winners tabs injected by JS -->
     </div>
     <div class="period-nav" id="period-nav">
       <button class="period-btn active" data-period="week">This week</button>
@@ -481,11 +561,13 @@
 
     <!-- Paid winners -->
     <div id="winners-paid" style="display:none">
-      <div id="hof-content-free"></div>
+      <div id="hof-content-paid"></div>
       <div class="divider"></div>
-      <div class="sec-label">Daily results — Free</div>
-      <div id="daily-log-free"></div>
+      <div class="sec-label">Daily results — Subscribers</div>
+      <div id="daily-log-paid"></div>
     </div>
+    <!-- Custom board winners injected by JS -->
+    <div id="winners-custom-panels"></div>
   </div>
 
   <div class="section" id="tab-enter">
@@ -555,6 +637,49 @@
   </div>
 </div>
 
+<!-- Custom leaderboard modal -->
+<div class="modal-bg" id="custom-lb-modal" style="display:none">
+  <div class="modal-box" style="max-width:380px">
+    <div class="modal-title" id="custom-lb-modal-title">New leaderboard</div>
+    <input class="modal-name-input" id="custom-lb-name" placeholder="Board name…" maxlength="30">
+    <div class="modal-sub" style="margin-bottom:8px">Choose which games to include:</div>
+    <div class="game-checkbox-grid" id="game-checkbox-grid">
+      <div class="game-checkbox-item" data-game="wordle">
+        <span class="game-checkbox-tile" style="background:#6aaa64">W</span>
+        <span class="game-checkbox-label">Wordle</span>
+        <span class="game-checkbox-check">✓</span>
+      </div>
+      <div class="game-checkbox-item" data-game="connections">
+        <span class="game-checkbox-tile" style="background:#b59fec">C</span>
+        <span class="game-checkbox-label">Connections</span>
+        <span class="game-checkbox-check">✓</span>
+      </div>
+      <div class="game-checkbox-item" data-game="pips">
+        <span class="game-checkbox-tile" style="background:#e67e3a">P</span>
+        <span class="game-checkbox-label">Pips</span>
+        <span class="game-checkbox-check">✓</span>
+      </div>
+      <div class="game-checkbox-item" data-game="mini">
+        <span class="game-checkbox-tile" style="background:#f0c040;color:#1a1a1a">M</span>
+        <span class="game-checkbox-label">Mini</span>
+        <span class="game-checkbox-check">✓</span>
+      </div>
+      <div class="game-checkbox-item" data-game="midi">
+        <span class="game-checkbox-tile" style="background:#5ba4cf">Md</span>
+        <span class="game-checkbox-label">Midi</span>
+        <span class="game-checkbox-check">✓</span>
+      </div>
+    </div>
+    <div class="modal-sub" style="margin-bottom:8px;margin-top:4px">Choose which players to include:</div>
+    <div id="player-checkbox-grid" style="display:flex;flex-direction:column;gap:6px;margin-bottom:14px;max-height:180px;overflow-y:auto;"></div>
+    <div class="modal-err" id="custom-lb-err"></div>
+    <div class="modal-actions">
+      <button class="btn" id="custom-lb-cancel">Cancel</button>
+      <button class="btn btn-p" id="custom-lb-save">Save board</button>
+    </div>
+  </div>
+</div>
+
 <!-- Colour picker modal -->
 <div class="modal-bg" id="colour-modal" style="display:none">
   <div class="modal-box" style="max-width:340px">
@@ -614,11 +739,14 @@ const db  = getFirestore(FB);
 const DOC = doc(db, "tracker", "shared");
 
 // ── state ──────────────────────────────────────────────
-let state = { players:[], scores:{}, playerColors:{} };
+let state = { players:[], scores:{}, playerColors:{}, customBoards:[] };
 let selectedPlayer = null;
 let currentPeriod  = 'week';
 let parsedGames    = {};
 let renamingPlayer = null;
+let editingBoardId = null;
+let activeLbTab = 'free';
+let activeWtTab = 'free';
 let colourPlayer = null;
 let selectedColour = null;
 let removingPlayer = null;
@@ -765,7 +893,7 @@ function fmtPips(raw){if(!raw?.puzzles)return'–';const s=raw.puzzles.filter(p=
 function fmtRaw(g,raw){if(g==='wordle')return`${raw==='X'?'X':raw}/6`;if(g==='connections'){const o=raw.solvedColors?.length?raw.solvedColors.join('→'):raw.firstColor;return`${raw.mistakes}mis${raw.reverseRainbow?' 🌈':''} ${o}`;}if(g==='mini'||g==='midi')return`${Math.floor(raw/60)}:${String(raw%60).padStart(2,'0')}`;if(g==='pips')return fmtPips(raw);return raw;}
 
 // ── render ─────────────────────────────────────────────
-function renderAll(){ renderLBPaid(); renderLBFree(); renderGrid(); renderEntryArea(); renderPlayers(); renderTbl(); renderWinners(); }
+function renderAll(){ renderLBFree(); renderLBPaid(); renderCustomBoards(); renderGrid(); renderEntryArea(); renderPlayers(); renderTbl(); renderWinners(); }
 
 function buildLBHtml(ranked, games, isW, maxT, note){
   if(!ranked.length) return '<div class="no-data">No scores yet today.</div>';
@@ -815,6 +943,197 @@ function renderLBFree(){
   const maxT=ranked[0]?.t||0, isW=ranked.filter(r=>r.t===maxT&&maxT>0).length===1;
   const note=anyP&&!anyPT?'<div class="info-banner">Pips times not found — all completions scoring 1pt.</div>':anyPT?'<div class="info-banner">Pips scores update as more players submit.</div>':'';
   el.innerHTML='<div class="lb-section-label">Free games only · Max 18pts</div>'+buildLBHtml(ranked,games,isW,maxT,note);
+}
+
+
+// ── Custom leaderboards ────────────────────────────────
+const GAME_META = {
+  wordle:      { label:'Wordle',      tile:'W',  bg:'#6aaa64', fg:'#fff' },
+  connections: { label:'Connections', tile:'C',  bg:'#b59fec', fg:'#fff' },
+  pips:        { label:'Pips',        tile:'P',  bg:'#e67e3a', fg:'#fff' },
+  mini:        { label:'Mini',        tile:'M',  bg:'#f0c040', fg:'#1a1a1a' },
+  midi:        { label:'Midi',        tile:'Md', bg:'#5ba4cf', fg:'#fff' },
+};
+
+function renderLBTabsRow(){
+  const row = document.getElementById('lb-tabs-row');
+  const boards = state.customBoards || [];
+  // Remove old custom buttons (keep free, paid, add-btn)
+  row.querySelectorAll('.lb-tab-custom').forEach(b=>b.remove());
+  const addBtn = document.getElementById('lb-add-btn');
+  boards.forEach(b=>{
+    const btn = document.createElement('button');
+    btn.className = 'lb-tab-btn lb-tab-custom' + (activeLbTab===b.id?' custom-active':'');
+    btn.style.setProperty('--custom-c', b.color||'#5ba4cf');
+    btn.dataset.lb = b.id;
+    btn.textContent = b.name;
+    row.insertBefore(btn, addBtn);
+  });
+  // Update active states on built-in tabs
+  row.querySelectorAll('.lb-tab-btn:not(.lb-tab-custom)').forEach(b=>{
+    b.classList.toggle('active', b.dataset.lb===activeLbTab && !b.classList.contains('lb-tab-custom'));
+  });
+}
+
+function renderCustomBoards(){
+  renderLBTabsRow();
+  renderWinnersToggle();
+  const container = document.getElementById('lb-custom-panels');
+  const boards = state.customBoards || [];
+  // Remove stale panels
+  container.innerHTML='';
+  boards.forEach(b=>{
+    const div = document.createElement('div');
+    div.id = 'lb-custom-'+b.id;
+    div.style.display = activeLbTab===b.id ? 'block' : 'none';
+    div.innerHTML = buildCustomLBHtml(b);
+    container.appendChild(div);
+  });
+  // Show/hide built-in panels
+  const lbFree = document.getElementById('lb-free');
+  const lbPaid = document.getElementById('lb-paid');
+  if(lbFree) lbFree.style.display = activeLbTab==='free' ? 'block' : 'none';
+  if(lbPaid) lbPaid.style.display = activeLbTab==='paid' ? 'block' : 'none';
+}
+
+function buildCustomLBHtml(board){
+  const games = board.games || [];
+  const t = today(), ds = state.scores[t]||{};
+  const pm = pipsPts(ds);
+  const anyPT = Object.values(ds).some(r=>r.pips?.puzzles?.some(p=>p.time!=null));
+  const anyP  = Object.values(ds).some(r=>r.pips);
+  const allowedPlayers = board.players && board.players.length ? board.players : state.players;
+  const ranked = state.players.filter(p=>allowedPlayers.includes(p)).map(p=>{
+    const raw=ds[p]||{};
+    const pts={};
+    if(games.includes('wordle')&&raw.wordle!=null) pts.wordle=wPts(raw.wordle);
+    if(games.includes('connections')&&raw.connections!=null) pts.connections=cPts(raw.connections.firstColor,raw.connections.reverseRainbow,raw.connections.mistakes);
+    if(games.includes('mini')&&raw.mini!=null) pts.mini=mnPts(raw.mini);
+    if(games.includes('midi')&&raw.midi!=null) pts.midi=mdPts(raw.midi);
+    if(games.includes('pips')&&raw.pips) pts.pips=pm[p]||0;
+    const tot=games.reduce((a,g)=>a+(pts[g]||0),0);
+    return{p,raw,pts,t:tot};
+  }).sort((a,b)=>b.t-a.t);
+  const maxT=ranked[0]?.t||0, isW=ranked.filter(r=>r.t===maxT&&maxT>0).length===1;
+  const note=anyP&&!anyPT?'<div class="info-banner">Pips times not found — all completions scoring 1pt.</div>':anyPT?'<div class="info-banner">Pips scores update as more players submit.</div>':'';
+  const gamePills = games.map(g=>{ const m=GAME_META[g]||{tile:g,bg:'#888',fg:'#fff'}; return`<span style="display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:3px;background:${m.bg};color:${m.fg};font-size:11px;font-weight:900;font-family:var(--sans)">${m.tile}</span>`; }).join('');
+  const header = `<div class="custom-lb-header"><div><div class="custom-lb-name">${board.name}</div><div style="display:flex;gap:4px;margin-top:6px;flex-wrap:wrap">${gamePills}</div></div><div style="display:flex;gap:6px"><button class="custom-lb-edit" data-edit-board="${board.id}">Edit</button><button class="custom-lb-delete" data-del-board="${board.id}">Delete</button></div></div>`;
+  const maxPts = games.reduce((a,g)=>a+(g==='pips'?6:6),0);
+  const label = `<div class="lb-section-label">${games.length} game${games.length!==1?'s':''} · Max ${maxPts}pts</div>`;
+  return header + label + buildLBHtml(ranked, games, isW, maxT, note);
+}
+
+function renderWinnersToggle(){
+  const toggle = document.getElementById('winners-toggle');
+  const boards = state.customBoards || [];
+  toggle.querySelectorAll('.wt-custom').forEach(b=>b.remove());
+  boards.forEach(b=>{
+    const btn = document.createElement('button');
+    btn.className = 'lb-tab-btn wt-custom' + (activeWtTab===b.id?' custom-active':'');
+    btn.style.setProperty('--custom-c', b.color||'#5ba4cf');
+    btn.dataset.wt = b.id;
+    btn.textContent = b.name;
+    toggle.appendChild(btn);
+  });
+  // Update active on built-ins
+  toggle.querySelectorAll('.lb-tab-btn:not(.wt-custom)').forEach(b=>{
+    b.classList.toggle('active', b.dataset.wt===activeWtTab);
+  });
+  // Build custom winners panels
+  const wp = document.getElementById('winners-custom-panels');
+  wp.innerHTML='';
+  boards.forEach(b=>{
+    const div = document.createElement('div');
+    div.id = 'winners-custom-'+b.id;
+    div.style.display = activeWtTab===b.id ? 'block' : 'none';
+    div.innerHTML = `<div id="hof-content-custom-${b.id}"></div><div class="divider"></div><div class="sec-label">Daily results — ${b.name}</div><div id="daily-log-custom-${b.id}"></div>`;
+    wp.appendChild(div);
+    buildHofHtmlCustom('hof-content-custom-'+b.id, 'daily-log-custom-'+b.id, filterDays(currentPeriod), b);
+  });
+  // Show/hide built-in winner panels
+  const wf=document.getElementById('winners-free'), wpd=document.getElementById('winners-paid');
+  if(wf)  wf.style.display  = activeWtTab==='free'  ? 'block':'none';
+  if(wpd) wpd.style.display = activeWtTab==='paid'  ? 'block':'none';
+}
+
+function buildHofHtmlCustom(hofId, logId, days, board){
+  const games = board.games || [];
+  const wc = winCtsCustom(days, board);
+  const known = allKnown();
+  const sorted = known.map(p=>({p,w:wc[p]||0})).sort((a,b)=>b.w-a.w).filter(x=>x.w>0);
+  const hof = document.getElementById(hofId); if(!hof)return;
+  if(!sorted.length){ hof.innerHTML='<div class="empty-hof">No wins recorded yet.</div>'; }
+  else{
+    const mc=['gold','silver','bronze'],em=['🥇','🥈','🥉'];let pr=0,lw=-1;
+    hof.innerHTML=sorted.slice(0,3).map((x,i)=>{
+      if(x.w!==lw){pr=i;lw=x.w;}
+      const ha=getPlayerColor(x.p);
+      return`<div class="hof-card ${mc[pr]||''}" style="border-left:4px solid ${ha}"><div class="hof-av" style="${avSt(x.p)}">${ini(x.p)}</div><div><div class="hof-name">${x.p}</div><div class="hof-wins">${x.w} daily win${x.w!==1?'s':''}</div></div><div class="hof-medal">${em[pr]||''}</div></div>`;
+    }).join('');
+  }
+  const dl = document.getElementById(logId); if(!dl)return;
+  const desc = [...days].sort().reverse();
+  if(!desc.length){ dl.innerHTML='<p style="font-size:13px;color:#aaa">No results yet.</p>'; return; }
+  dl.innerHTML = desc.map(day=>{
+    const r = dayWCustom(day, allKnown(), state.scores, board);
+    const ds = new Date(day+'T12:00:00Z').toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short'});
+    if(!r) return`<div class="day-row"><span class="day-date">${ds}</span><span class="day-tie">No scores</span></div>`;
+    if(r.tied) return`<div class="day-row"><span class="day-date">${ds}</span><span class="day-winner day-tie">Tie — ${r.winners.join(', ')}</span><span class="day-score">${r.total}pts each</span></div>`;
+    return`<div class="day-row"><span class="day-date">${ds}</span><span class="day-winner">👑 ${r.winner}</span><span class="day-score">${r.total}pts</span></div>`;
+  }).join('');
+}
+
+function dayWCustom(dk, players, scores, board){
+  const ds=scores[dk]||{}, games=board.games||[];
+  const allowed=board.players&&board.players.length?board.players:players;
+  const act=players.filter(p=>allowed.includes(p)&&ds[p]&&Object.keys(ds[p]).length);
+  if(!act.length)return null;
+  const pm=pipsPts(ds);
+  const tots=act.map(p=>{
+    const raw=ds[p]||{};
+    let t=0;
+    if(games.includes('wordle')&&raw.wordle!=null) t+=wPts(raw.wordle)||0;
+    if(games.includes('connections')&&raw.connections!=null) t+=cPts(raw.connections.firstColor,raw.connections.reverseRainbow,raw.connections.mistakes)||0;
+    if(games.includes('mini')&&raw.mini!=null) t+=mnPts(raw.mini)||0;
+    if(games.includes('midi')&&raw.midi!=null) t+=mdPts(raw.midi)||0;
+    if(games.includes('pips')&&raw.pips) t+=pm[p]||0;
+    return{p,t};
+  });
+  const max=Math.max(...tots.map(x=>x.t)), ws=tots.filter(x=>x.t===max);
+  return{winner:ws.length===1?ws[0].p:null,total:max,tied:ws.length>1,winners:ws.map(x=>x.p)};
+}
+
+function winCtsCustom(days, board){
+  const k=allKnown(), w={}; k.forEach(p=>w[p]=0);
+  for(const d of days){ const r=dayWCustom(d,k,state.scores,board); if(r?.winner) w[r.winner]++; }
+  return w;
+}
+
+// ── Custom board modal logic ──
+function openCustomBoardModal(board=null){
+  editingBoardId = board ? board.id : null;
+  document.getElementById('custom-lb-modal-title').textContent = board ? 'Edit leaderboard' : 'New leaderboard';
+  document.getElementById('custom-lb-name').value = board ? board.name : '';
+  document.getElementById('custom-lb-err').textContent = '';
+  // Game checkboxes
+  const selectedGames = board ? board.games : [];
+  document.querySelectorAll('.game-checkbox-item').forEach(el=>{
+    el.classList.toggle('checked', selectedGames.includes(el.dataset.game));
+  });
+  // Player checkboxes — default all checked for new boards
+  const selectedPlayers = board ? (board.players || state.players.slice()) : state.players.slice();
+  const pcGrid = document.getElementById('player-checkbox-grid');
+  pcGrid.innerHTML = state.players.map(p=>`
+    <div class="player-checkbox-item${selectedPlayers.includes(p)?' checked':''}" data-player="${p}">
+      <div class="player-checkbox-av" style="${avSt(p)}">${ini(p)}</div>
+      <span class="player-checkbox-name">${p}</span>
+      <span class="player-checkbox-check">✓</span>
+    </div>`).join('');
+  pcGrid.querySelectorAll('.player-checkbox-item').forEach(el=>{
+    el.addEventListener('click', ()=>el.classList.toggle('checked'));
+  });
+  document.getElementById('custom-lb-modal').style.display='flex';
+  setTimeout(()=>document.getElementById('custom-lb-name').focus(),50);
 }
 
 function renderGrid(){
@@ -948,19 +1267,71 @@ function buildHofHtml(hofId, logId, days, mode){
 
 function renderWinners(){
   const days=filterDays(currentPeriod);
-  buildHofHtml('hof-content-paid','daily-log-paid',days,'paid');
   buildHofHtml('hof-content-free','daily-log-free',days,'free');
+  buildHofHtml('hof-content-paid','daily-log-paid',days,'paid');
+  renderWinnersToggle();
 }
 
 // ── wire static UI (tabs, period, add, rename modal) ───
 
-// Leaderboard toggle
-document.getElementById('lb-toggle').addEventListener('click', e=>{
-  const btn=e.target.closest('.lb-toggle-btn'); if(!btn)return;
-  const which=btn.dataset.lb;
-  document.querySelectorAll('.lb-toggle-btn').forEach(b=>b.classList.toggle('active',b===btn));
-  document.getElementById('lb-free').style.display=which==='free'?'block':'none';
-  document.getElementById('lb-paid').style.display=which==='paid'?'block':'none';
+// Leaderboard tabs (built-in + custom)
+document.getElementById('lb-tabs-row').addEventListener('click', e=>{
+  const btn = e.target.closest('.lb-tab-btn, .lb-add-btn');
+  if(!btn) return;
+  if(btn.classList.contains('lb-add-btn')){ openCustomBoardModal(); return; }
+  activeLbTab = btn.dataset.lb;
+  renderCustomBoards();
+});
+
+// Custom board edit/delete (delegated on custom panels container)
+document.getElementById('lb-custom-panels').addEventListener('click', e=>{
+  const editBtn = e.target.closest('[data-edit-board]');
+  const delBtn  = e.target.closest('[data-del-board]');
+  if(editBtn){
+    const b = (state.customBoards||[]).find(x=>x.id===editBtn.dataset.editBoard);
+    if(b) openCustomBoardModal(b);
+  }
+  if(delBtn){
+    const id = delBtn.dataset.delBoard;
+    state.customBoards = (state.customBoards||[]).filter(x=>x.id!==id);
+    if(activeLbTab===id) activeLbTab='free';
+    if(activeWtTab===id) activeWtTab='free';
+    push();
+  }
+});
+
+// Custom lb modal — checkbox toggles
+document.getElementById('game-checkbox-grid').addEventListener('click', e=>{
+  const item = e.target.closest('.game-checkbox-item'); if(!item)return;
+  item.classList.toggle('checked');
+});
+
+// Custom lb modal — save
+document.getElementById('custom-lb-save').addEventListener('click', async ()=>{
+  const name = document.getElementById('custom-lb-name').value.trim().toUpperCase();
+  const errEl = document.getElementById('custom-lb-err');
+  if(!name){ errEl.textContent='Please enter a board name.'; return; }
+  const games = [...document.querySelectorAll('.game-checkbox-item.checked')].map(el=>el.dataset.game);
+  if(!games.length){ errEl.textContent='Select at least one game.'; return; }
+  if(!state.customBoards) state.customBoards=[];
+  const boardPlayers = [...document.querySelectorAll('.player-checkbox-item.checked')].map(el=>el.dataset.player);
+  if(editingBoardId){
+    const b = state.customBoards.find(x=>x.id===editingBoardId);
+    if(b){ b.name=name; b.games=games; b.players=boardPlayers; }
+  } else {
+    const id = 'cb_'+Date.now();
+    state.customBoards.push({ id, name, games, players:boardPlayers, color:'#5ba4cf' });
+    activeLbTab = id;
+  }
+  document.getElementById('custom-lb-modal').style.display='none';
+  editingBoardId=null;
+  await push();
+});
+
+// Custom lb modal — cancel
+document.getElementById('custom-lb-cancel').addEventListener('click', ()=>{
+  document.getElementById('custom-lb-modal').style.display='none';
+  editingBoardId=null;
 });
 
 // Tabs
@@ -979,13 +1350,11 @@ document.getElementById('period-nav').addEventListener('click', e=>{
   renderWinners();
 });
 
-// Winners toggle (paid / free)
+// Winners toggle
 document.getElementById('winners-toggle').addEventListener('click', e=>{
-  const btn=e.target.closest('.lb-toggle-btn'); if(!btn)return;
-  const which=btn.dataset.wt;
-  document.querySelectorAll('#winners-toggle .lb-toggle-btn').forEach(b=>b.classList.toggle('active',b===btn));
-  document.getElementById('winners-free').style.display=which==='free'?'block':'none';
-  document.getElementById('winners-paid').style.display=which==='paid'?'block':'none';
+  const btn=e.target.closest('.lb-tab-btn'); if(!btn)return;
+  activeWtTab=btn.dataset.wt;
+  renderWinnersToggle();
 });
 
 // Player card selection — delegated on the grid container
@@ -1078,7 +1447,7 @@ document.getElementById('today-lbl').textContent =
   new Date().toLocaleDateString('en-CA',{weekday:'short',month:'short',day:'numeric'});
 
 onSnapshot(DOC, snap=>{
-  if(snap.exists()){ state=snap.data(); state.scores??={}; state.players??=[]; state.playerColors??={}; }
+  if(snap.exists()){ state=snap.data(); state.scores??={}; state.players??=[]; state.playerColors??={}; state.customBoards??=[]; }
   syncDot('ok');
   document.getElementById('loading').style.display='none';
   document.getElementById('app-nav').style.display='flex';
